@@ -1,4 +1,0 @@
-PROGRAM hellogit;
-BEGIN
-  Writeln('Hello GitHub!');
-END.
