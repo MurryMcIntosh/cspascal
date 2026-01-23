@@ -1,27 +1,29 @@
-PROGRAM wordcount (input, output);
+PROGRAM wc;
 USES CopyUnit;
 VAR
+  c : CHARACTER;
   nc, nl, nw : INTEGER;
-  c : character;
   inword : BOOLEAN;
 BEGIN
   nc := 0;
   nl := 0;
   nw := 0;
-  inword := false;
+  inword := FALSE;
   WHILE (getc(c) <> ENDFILE) DO
   BEGIN
-    IF (c = BLANK) or (c = NEWLINE) or (c = TAB) then
+    nc := nc + 1;
+
+    IF c = NEWLINE THEN nl := nl + 1;
+
+    IF (c = BLANK) OR (c = TAB) OR (c = NEWLINE) THEN inword := FALSE
+    ELSE IF inword = FALSE THEN
     BEGIN
-      inword := false;
-      IF (c = NEWLINE) THEN nl := nl + 1;
-    END
-    ELSE IF (not inword) THEN
-    BEGIN
-      inword := true;
-      nw := nw + 1
+      inword := TRUE;
+      nw := nw + 1;
     END;
-    nc := nc + 1
   END;
-  WriteLn(nl, ' ', nw, ' ', nc)
+  IF (nc <> 0) AND (nl = 0) THEN nl := 1;
+  Writeln('Number of characters: ', nc);
+  Writeln('Number of lines:      ', nl);
+  Writeln('Number of words:      ', nw);
 END.
